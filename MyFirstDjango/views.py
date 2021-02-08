@@ -14,7 +14,6 @@ def main(request):
         user = request.POST.get('user')
         passwd = sha256(request.POST.get('passwd').encode('utf-8')).hexdigest()
         if Users.objects.filter(user=user,passwd=passwd):
-            info = 'Welcome'
             authentication.update({host:user})
             return HttpResponseRedirect(f'profile/?user={user}')
         else:
@@ -39,7 +38,7 @@ def signup(request):
         else:
             CreateUser(user,passwd,email)
             info = 'Created ' + user
-            return HttpResponseRedirect('/')
+            return render(request,'main.html',{'info':info})
     return render(request,'signup.html',{'info':info})
 
 def profile(request):
@@ -60,8 +59,6 @@ def profile(request):
     notes = list(zip(noteids,notes))
     scrollId = request.POST.get('scrollId')
     if scrollId:
-        if scrollId == "-1":
-            scrollId = len(noteids)
         return HttpResponseRedirect(f'/profile?user={user}#{scrollId}')
     return render(request,'profile.html',{'user':user, 'notes':notes, 'hidden':'hidden'})
 
