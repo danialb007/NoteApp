@@ -9,7 +9,6 @@ authentication = {}
 def main(request):
     host,user = authenticate(request)
     authentication.update({host:user})
-    print(authentication)
     info = ''
     if request.method == 'POST':
         user = request.POST.get('user')
