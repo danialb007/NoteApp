@@ -9,8 +9,8 @@ authentication = {}
 def main(request):
     host,user = authenticate(request)
     authentication.update({host:user})
+    print(authentication)
     info = ''
-    all_users = Users.objects.all()
     if request.method == 'POST':
         user = request.POST.get('user')
         passwd = sha256(request.POST.get('passwd').encode('utf-8')).hexdigest()
@@ -25,7 +25,7 @@ def main(request):
         if logout:
             authentication.update({host:''})
             return HttpResponseRedirect('/')
-    return render(request,'main.html',{'info':info,'users':all_users})
+    return render(request,'main.html',{'info':info})
 
 def signup(request):
     info = ''
