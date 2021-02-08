@@ -7,7 +7,7 @@ from hashlib import sha256
 authentication = {}
 
 def main(request):
-    host,user = authenticate(request)
+    host,user = Authenticate(request)
     authentication.update({host:user})
     info = ''
     if request.method == 'POST':
@@ -42,7 +42,7 @@ def signup(request):
     return render(request,'signup.html',{'info':info})
 
 def profile(request):
-    host,user = authenticate(request)
+    host,user = Authenticate(request)
     if not user or authentication[host] != user:
         return HttpResponseRedirect('/')
     notes = Notes.objects.filter(user=user)
@@ -53,17 +53,22 @@ def profile(request):
             notes = Notes.objects.filter(user=user)
         except TypeError:
             pass
+        search = request.POST.get('q')
+        if search:
+            notes = Search(search,user)
     if not notes:
-        return render(request,'profile.html',{'user':user,'hidden':''})
+        if search:
+            return render(request,'profile.html',{'user':user,'hidden':'hidden', 'hidden2':''})
+        return render(request,'profile.html',{'user':user,'hidden':'', 'hidden2':'hidden'})
     noteids = [x for x in range(1,len(notes)+1)]
     notes = list(zip(noteids,notes))
     scrollId = request.POST.get('scrollId')
     if scrollId:
         return HttpResponseRedirect(f'/profile?user={user}#{scrollId}')
-    return render(request,'profile.html',{'user':user, 'notes':notes, 'hidden':'hidden'})
+    return render(request,'profile.html',{'user':user, 'notes':notes, 'hidden':'hidden', 'hidden2':'hidden'})
 
 def createNote(request):
-    host,user = authenticate(request)
+    host,user = Authenticate(request)
     if not user or authentication[host] != user:
         return HttpResponseRedirect('/')
     if request.method == 'POST':
@@ -73,7 +78,7 @@ def createNote(request):
     return render(request,'createNote.html',{'hidden':'hidden','user':user})
 
 def editNote(request):
-    host,user = authenticate(request)
+    host,user = Authenticate(request)
     if not user or authentication[host] != user:
         return HttpResponseRedirect('/')
     noteid = int(request.GET.get('noteid')) - 1
@@ -90,9 +95,17 @@ def CreateUser(user,passwd,email):
     passwd = sha256(passwd.encode('utf-8')).hexdigest()
     Users.objects.create(user=user,passwd=passwd,email=email)
 
-def authenticate(request):
+def Authenticate(request):
     host = request.META['REMOTE_ADDR']
     user = request.GET.get('user')
     if not user:
         user = False
     return (host,user)
+
+def Search(search,user):
+    allnotes = Notes.objects.filter(user=user)
+    matched = []
+    for note in allnotes:
+        if search in note.notes:
+            matched.append(note)
+    return matched

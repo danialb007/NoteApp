@@ -32,13 +32,21 @@ button{
 }
 button:hover{
     transition-duration: 0.3s;
-    background-color: #e9505046;
+    color: #b1e426;
+}
+button:focus{
+    outline: none;
 }
 input{
+    transition: border-bottom 0.3s ease-in-out;
     background-color: #222222;
     color: #b6b6b6;
     font-size: 30px;
-    border: none;
+    border: none #00000000;
+    outline: none;
+}
+input:hover{
+    border-bottom: 2px solid #b1e426;
 }
 input[type="number"]{
     width: 50px;
@@ -66,15 +74,14 @@ li{
     height: 150px;
     background-color: #222222;
     color: #d8d8d8;
-    border: none #e9505000;
+    border: none #00000000;
     resize: none;
     font-family: 'Times New Roman', Times, serif;
     font-size: 24px;
-    overflow-wrap: normal;
 }
 .notes:hover{
-    transition-duration: 0.5s;
-    border-bottom: 1px solid #e95050;
+    transition-duration: 0.3s;
+    border-bottom: 2px solid #b1e426;
 }
 .notebuttons{
     width: 100%;
@@ -82,9 +89,6 @@ li{
     position: relative;
     top: -45px;
     right: 5px;
-}
-.notebuttons:hover{
-    background-color: #00000000;
 }
 .removebuttons{
     position: relative;
@@ -106,6 +110,26 @@ li{
 .info{
     color: #b1e426;
     text-align: center;
+}
+.searchinput{
+    transition: width 0.3s ease-in-out, border-bottom 0.3s ease-in-out;
+    padding-right: 95px;
+    font-size: 20px;
+    float: right;
+    width: 200px;
+    height: 45px;
+    position: relative;
+    left: 10px;
+    top: 1px;
+
+}
+.searchinput:focus{
+    width: 800px;
+}
+.searchbutton{
+    float: right;
+    position: absolute;
+    right: 25px;
 }
 </style>
 {% block body %}
