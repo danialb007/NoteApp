@@ -24,7 +24,7 @@
     {% for noteid,note in notes %}
         <li id="{{noteid}}">
             <form class="noteform" method="GET" action="editNote/">
-                <button class="removebuttons" name="noteid" value="{{noteid}}" form="removenote">remove</button>
+                <button class="removebuttons" name="noteid" value="{{noteid}}" form="removenote">{{noteid}}. remove</button>
                 <button class="notebuttons" name="user" value="{{user}}"><textarea readonly class="notes"> {{note.notes}}</textarea></button>
                 <input type="text" name="noteid" value="{{noteid}}" hidden>
             </form>

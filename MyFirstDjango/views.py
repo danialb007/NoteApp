@@ -71,24 +71,34 @@ def createNote(request):
     host,user = Authenticate(request)
     if not user or authentication[host] != user:
         return HttpResponseRedirect('/')
+    info = ''
     if request.method == 'POST':
         note = request.POST.get('note')
+        if not note:
+            info = 'Empty note!'
+            return render(request,'createNote.html',{'info':info, 'user':user})
+        info = 'Created!'
         Notes.objects.create(user=user,notes=note)
-        return render(request,'createNote.html',{'user':user}) 
-    return render(request,'createNote.html',{'hidden':'hidden','user':user})
+        return render(request,'createNote.html',{'info':info, 'user':user})
+    return render(request,'createNote.html',{'info':info, 'user':user})
 
 def editNote(request):
     host,user = Authenticate(request)
     if not user or authentication[host] != user:
         return HttpResponseRedirect('/')
+    info = ''
     noteid = int(request.GET.get('noteid')) - 1
     note = Notes.objects.filter(user=user)
     note = note[noteid]
     if request.method == 'POST':
         new_note = request.POST.get('note')
+        if not new_note:
+            info = 'Empty note!'
+            return render(request,'editNote.html',{'info':info, 'user':user, 'new_note':new_note})
+        info = 'Edited!'
         Notes.objects.filter(user=user,notes=note.notes).update(notes=new_note)
-        return render(request,'editNote.html',{'user':user, 'new_note':new_note})
-    return render(request,'editNote.html',{'hidden':'hidden','user':user, 'note':note})
+        return render(request,'editNote.html',{'info':info, 'user':user, 'new_note':new_note})
+    return render(request,'editNote.html',{'info':info, 'user':user, 'note':note})
     
 
 def CreateUser(user,passwd,email):
@@ -106,6 +116,6 @@ def Search(search,user):
     allnotes = Notes.objects.filter(user=user)
     matched = []
     for note in allnotes:
-        if search in note.notes:
+        if search in note.notes.lower():
             matched.append(note)
     return matched
