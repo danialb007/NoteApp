@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<head>
+    <title>To Do App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+body{
+    background-color: #333333;
+    color: #e95050;
+    font-size: 30px;
+}
+.centerBody{
+    text-align: center;
+}
+h1{
+    cursor: default;
+}
+label{
+    margin-left: -250px;
+}
+button{
+    margin-left: -0px;
+    background-color: #00000000;
+    font-size: 26px;
+    position: relative;
+    color: #e95050;
+    border: none;
+    cursor: pointer;
+    height: 45px;
+}
+button:hover{
+    transition-duration: 0.3s;
+    background-color: #e9505046;
+}
+input{
+    background-color: #222222;
+    color: #b6b6b6;
+    font-size: 30px;
+    border: none;
+}
+input[type="number"]{
+    width: 50px;
+    line-break: 1px;
+    font-size: 18px;
+    -moz-appearance: textfield;
+}
+ul{
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -30px;
+    list-style: decimal;
+}
+li{
+    float: left;
+    width: 100%;
+    padding-bottom: 30px;
+}
+.notes{
+    cursor: pointer;
+    width: 100%;
+    height: 300px;
+    background-color: #222222;
+    color: #d8d8d8;
+    border: none;
+    resize: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+}
+.notebuttons{
+    width: 100%;
+    margin-left: -34px;
+    display: flex;
+    height: 300px;
+}
+.notebuttons:hover{
+    background-color: #00000000;
+}
+.removebuttons{
+    margin-left: -10px;
+    font-size: 22px;
+    height: 35px;
+}
+.editor{
+    width: 100%;
+    height: 400px;
+    background-color: #222222;
+    color: #d8d8d8;
+    border: none;
+    resize: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+}
+.info{
+    color: #b1e426;
+    text-align: center;
+}
+</style>
+{% block body %}
+{% endblock %}

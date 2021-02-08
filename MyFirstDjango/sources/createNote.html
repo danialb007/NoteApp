@@ -1,0 +1,14 @@
+{% extends 'Base.html' %}
+{% block body %}
+<body style="margin-right: 30px;margin-top: 30px;margin-left: 30px;">
+    <h1 style="float: left;padding-right: 10px;">Create a note:<h1 style="color: #b1e426;" {{hidden}}>Created!</h1></h1>
+    <form method="POST" action="">
+        {%csrf_token%}
+        <textarea autofocus name="note" class="editor"></textarea><br>
+        <button style="float: left;" type="submit">Create</button>
+        <button style="float: right;" type="submit" form="backtoprofile" name="user" value="{{user}}">Back to profile</button>
+    </form>
+    <form method="GET" action="/profile/" id="backtoprofile">
+    </form>
+</body>
+{% endblock %}
