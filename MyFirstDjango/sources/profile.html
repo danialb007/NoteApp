@@ -1,35 +1,30 @@
 {% extends 'Base.html' %}
 {% block body %}
-<body style="margin-left: 30px;margin-top: 30px;margin-right: 30px;">
-    <h1>{{user}}'s profile</h1><br>
-    <form method="POST" action="" id="scrollIdform">{%csrf_token%}</form>
-    <form method="POST" action="" id="searchform">{%csrf_token%}</form>
-    <form method="GET">
-        <button type="submit" value="{{user}}" name="user" formaction="createNote/">Create</button>
-        <button type="submit" value="logout" name="logout" formaction="/">Log out</button>
-        <button name="user" value="{{user}}" form="scrollIdform" type="submit">Jump to :</button>
-        <input form="scrollIdform" name="scrollId" type="number">
-        <input class="searchinput" form="searchform" name="q" type="text">
-        <button class="searchbutton" name="user" value="{{user}}" form="searchform" type="submit">Search</button>
-    </form><br>
-    <form method="POST" action="" id="removenote">{%csrf_token%}</form>
-    <div class="info" style="margin-top: 110px;" {{hidden}}>
-        <h1>You have no notes!</h1>
-        <h1>Press on create to get started.</h1>
+<body>
+    <div class="profile">
+        <h1>{{user}}'s profile</h1><br>
+        <form method="GET" action="">
+            <a href="createNote/"><button type="button">Create</button></a>
+            <a href="/?logout=logout"><button type="button">Log out</button></a><br>
+            <button class="searchbutton" type="submit">Search</button>
+            <input class="searchinput" name="q" type="text"><br>
+            <a href="/remove"><button class="searchbutton" type="button">Remove</button></a><br>
+        </form>
+        <form method="POST" action="" id="removenote">{%csrf_token%}</form>
+        <div class="info">
+            <h1>{{info}}</h1>
+        </div>
+        <div>
+            <ul>
+            {% for noteid,note in notes %}
+                <li>
+                    <button class="removebuttons" name="noteid" value="{{noteid}}" form="removenote">{{noteid}}. remove</button>
+                    <a href="editNote/?noteid={{noteid}}"><button class="notebuttons"><textarea readonly class="notes">{{note.notes}}</textarea></button></a>
+                </li>
+            {% endfor %}
+                </form>
+            </ul>
+        </div>
     </div>
-    <div class="info" style="margin-top: 110px;" {{hidden2}}>
-        <h1>Nothing found!</h1>
-    </div>
-    <ul>
-    {% for noteid,note in notes %}
-        <li id="{{noteid}}">
-            <form class="noteform" method="GET" action="editNote/">
-                <button class="removebuttons" name="noteid" value="{{noteid}}" form="removenote">{{noteid}}. remove</button>
-                <button class="notebuttons" name="user" value="{{user}}"><textarea readonly class="notes"> {{note.notes}}</textarea></button>
-                <input type="text" name="noteid" value="{{noteid}}" hidden>
-            </form>
-        </li>
-    {% endfor %}
-    </ul>
 </body>
 {% endblock %}

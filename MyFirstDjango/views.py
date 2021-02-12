@@ -1,4 +1,3 @@
-from django.template import loader
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect, HttpResponse
 from .models import Users, Notes
@@ -7,21 +6,19 @@ from hashlib import sha256
 authentication = {}
 
 def main(request):
-    host,user = Authenticate(request)
-    authentication.update({host:user})
     info = ''
     if request.method == 'POST':
         user = request.POST.get('user')
         passwd = sha256(request.POST.get('passwd').encode('utf-8')).hexdigest()
         if Users.objects.filter(user=user,passwd=passwd):
-            authentication.update({host:user})
-            return HttpResponseRedirect(f'profile/?user={user}')
+            Authenticate(request, login=True, user=user)
+            return HttpResponseRedirect(f'profile/')
         else:
             info = 'Invalid'
     elif request.method == 'GET':
         logout = request.GET.get('logout')
         if logout:
-            authentication.update({host:''})
+            Authenticate(request,logout=True)
             return HttpResponseRedirect('/')
     return render(request,'main.html',{'info':info})
 
@@ -42,35 +39,52 @@ def signup(request):
     return render(request,'signup.html',{'info':info})
 
 def profile(request):
-    host,user = Authenticate(request)
-    if not user or authentication[host] != user:
-        return HttpResponseRedirect('/')
+    user = Authenticate(request)
+    if not user:return HttpResponseRedirect('/')
     notes = Notes.objects.filter(user=user)
+    search = ''
+    info = ''
     if request.method == 'POST':
-        try:
-            noteid = int(request.POST.get('noteid')) - 1
+        noteid = request.POST.get('noteid')
+        if noteid:
+            noteid = int(noteid) - 1
             Notes.objects.filter(user=user)[noteid].delete()
             notes = Notes.objects.filter(user=user)
-        except TypeError:
-            pass
+    search = request.GET.get('q')    
+    if search:
+        notes = Search(search,user)
+    if not notes:
+        info = 'You have no notes!'
+        if search:
+            info = 'Nothing found!'
+    noteids = [x for x in range(1,len(notes)+1)]
+    notes = list(zip(noteids,notes))
+    return render(request,'profile.html',{'user':user, 'notes':notes,'info':info})
+
+def remove(request):
+    user = Authenticate(request)
+    if not user:return HttpResponseRedirect('/')
+    notes = Notes.objects.filter(user=user)
+    if request.method == 'POST':
+        noteid = request.POST.get('noteid')
+        if noteid:
+            noteid = int(noteid) - 1
+            Notes.objects.filter(user=user)[noteid].delete()
+            notes = Notes.objects.filter(user=user)
         search = request.POST.get('q')
         if search:
             notes = Search(search,user)
     if not notes:
         if search:
-            return render(request,'profile.html',{'user':user,'hidden':'hidden', 'hidden2':''})
-        return render(request,'profile.html',{'user':user,'hidden':'', 'hidden2':'hidden'})
+            return render(request,'remove.html',{'user':user,})
+        return render(request,'remove.html',{'user':user,})
     noteids = [x for x in range(1,len(notes)+1)]
     notes = list(zip(noteids,notes))
-    scrollId = request.POST.get('scrollId')
-    if scrollId:
-        return HttpResponseRedirect(f'/profile?user={user}#{scrollId}')
-    return render(request,'profile.html',{'user':user, 'notes':notes, 'hidden':'hidden', 'hidden2':'hidden'})
+    return render(request,'remove.html',{'user':user, 'notes':notes,})
 
 def createNote(request):
-    host,user = Authenticate(request)
-    if not user or authentication[host] != user:
-        return HttpResponseRedirect('/')
+    user = Authenticate(request)
+    if not user:return HttpResponseRedirect('/')
     info = ''
     if request.method == 'POST':
         note = request.POST.get('note')
@@ -83,11 +97,12 @@ def createNote(request):
     return render(request,'createNote.html',{'info':info, 'user':user})
 
 def editNote(request):
-    host,user = Authenticate(request)
-    if not user or authentication[host] != user:
-        return HttpResponseRedirect('/')
+    user = Authenticate(request)
+    if not user:return HttpResponseRedirect('/')
     info = ''
-    noteid = int(request.GET.get('noteid')) - 1
+    noteid = request.GET.get('noteid')
+    if not noteid:return HttpResponseRedirect('/profile')
+    noteid = int(noteid) - 1
     note = Notes.objects.filter(user=user)
     note = note[noteid]
     if request.method == 'POST':
@@ -100,17 +115,23 @@ def editNote(request):
         return render(request,'editNote.html',{'info':info, 'user':user, 'new_note':new_note})
     return render(request,'editNote.html',{'info':info, 'user':user, 'note':note})
     
-
 def CreateUser(user,passwd,email):
     passwd = sha256(passwd.encode('utf-8')).hexdigest()
     Users.objects.create(user=user,passwd=passwd,email=email)
 
-def Authenticate(request):
+def Authenticate(request,login=False,user=False,logout=False):
     host = request.META['REMOTE_ADDR']
-    user = request.GET.get('user')
-    if not user:
-        user = False
-    return (host,user)
+    if login:
+        authentication.update({host:user})
+        return
+    if logout:
+        authentication.update({host:user})
+        return
+    try:
+        return authentication[host]    
+    except KeyError:
+        authentication.update({host:user})
+        return authentication[host]
 
 def Search(search,user):
     allnotes = Notes.objects.filter(user=user)

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '192.168.1.103',
+    'localhost',
+    '127.0.0.1',
 ]
 
 
@@ -57,7 +59,10 @@ ROOT_URLCONF = 'MyFirstDjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [f"{BASE_DIR}/MyFirstDjango/sources"],
+        'DIRS': [
+            f"{BASE_DIR}/MyFirstDjango/sources",
+            f"{BASE_DIR}/spotify/sources",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

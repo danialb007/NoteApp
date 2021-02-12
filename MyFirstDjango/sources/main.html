@@ -1,21 +1,21 @@
 {% extends 'Base.html' %}
 {% block body %}
-<body class="centerBody">
-    <form method="POST" action="/"><br>
-        {%csrf_token%}
-        <label for="username">Username:</label><br>
-        <input
-        type="text" name="user" oninvalid="this.setCustomValidity('Username requierd')" 
-        oninput="this.setCustomValidity('')" required><br><br>
-        <label for="password">Password:</label><br>
-        <input
-        type="password" name="passwd" oninvalid="this.setCustomValidity('Password requierd')" 
-        oninput="this.setCustomValidity('')" required><br><br>
-        <p class="info">{{info}}</p>
-        <button type="submit" style="right: 90px;">Sign in</button>
-        <button type="submit" style="left: 90px;" form="signup">Sign up</button>
-    </form>
-    <form method="GET" action="signup/" id="signup">
+<body>
+    <div class="mainpage">
+        <form method="POST" action="/"><br>
+            {%csrf_token%}
+            <label for="username">Username:</label><br>
+            <input
+            type="text" name="user" oninvalid="this.setCustomValidity('Username requierd')" 
+            oninput="this.setCustomValidity('')" required><br><br>
+            <label for="password">Password:</label><br>
+            <input
+            type="password" name="passwd" oninvalid="this.setCustomValidity('Password requierd')" 
+            oninput="this.setCustomValidity('')" required><br><br>
+            <p class="info">{{info}}</p>
+            <button type="submit">Sign in</button>
+            <a style="float: right;" href="signup/"><button type="button">Sign up</button></a>
+        </form>
     </form>
 </body>
 {% endblock %}

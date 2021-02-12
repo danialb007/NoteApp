@@ -6,9 +6,7 @@
         {%csrf_token%}
         <textarea autofocus name="note" class="editor">{{note.notes}}{{new_note}}</textarea><br><br>
         <button type="submit">Save</button>
-        <button style="float: right;" type="submit" form="backtoprofile" name="user" value="{{user}}">Back to profile</button>
-    </form>
-    <form method="GET" action="/profile/" id="backtoprofile">
+        <a href="/profile/"><button style="float: right;" type="button">Back to profile</button></a>
     </form>
 </body>
 {% endblock %}
