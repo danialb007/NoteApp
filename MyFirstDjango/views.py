@@ -64,20 +64,27 @@ def profile(request):
 def remove(request):
     user = Authenticate(request)
     if not user:return HttpResponseRedirect('/')
+    info = ''
     notes = Notes.objects.filter(user=user)
+    removeall = request.GET.get('removeall')
+    if removeall:
+        [ x.delete() for x in notes ]
+        notes = Notes.objects.filter(user=user)
     if request.method == 'POST':
-        noteid = request.POST.get('noteid')
-        if noteid:
-            noteid = int(noteid) - 1
-            Notes.objects.filter(user=user)[noteid].delete()
-            notes = Notes.objects.filter(user=user)
-        search = request.POST.get('q')
-        if search:
-            notes = Search(search,user)
+        if not removeall:
+            notes_to_remove = []
+            for ni in range(1,len(notes)+1):
+                noterm = request.POST.get(f'noterm{ni}')
+                if noterm:
+                    notes_to_remove.append(int(noterm)-1)
+            if notes_to_remove:
+                [ notes[x].delete() for x in notes_to_remove ]
+                notes = Notes.objects.filter(user=user)
+            else:
+                del notes_to_remove, noterm, removeall
     if not notes:
-        if search:
-            return render(request,'remove.html',{'user':user,})
-        return render(request,'remove.html',{'user':user,})
+        info = 'You have no notes!'
+        return render(request,'remove.html',{'user':user, 'info':info})
     noteids = [x for x in range(1,len(notes)+1)]
     notes = list(zip(noteids,notes))
     return render(request,'remove.html',{'user':user, 'notes':notes,})
