@@ -2,23 +2,22 @@
 {% block body %}
 <body>
     <div class="profile">
-        <h1>{{user}}'s profile</h1><br>
-        <form method="GET" action="">
+        <a href="/profile"><h1>{{user}}'s profile</h1></a>
+        <form style="margin-top: 2%;text-align: center; border-bottom: 1px solid #b1e426;" method="GET" action="">
             <a href="createNote/"><button type="button">Create</button></a>
             <a href="/?logout=logout"><button type="button">Log out</button></a><br>
-            <button class="searchbutton" type="submit">Search</button>
-            <input class="searchinput" name="q" type="text"><br>
-            <a href="/remove"><button class="searchbutton" type="button">Remove</button></a><br>
+            <input placeholder="Search..." class="searchinput" name="q" type="text"><br>
+            <a href="/remove"><button class="smallbutton" type="button">Remove</button></a>
         </form>
         <form method="POST" action="" id="removenote">{%csrf_token%}</form>
         <div class="info">
-            <h1>{{info}}</h1>
+            <h2>{{info}}</h2>
         </div>
-        <div style="display: flex;">
+        <div>
             <ul>
             {% for noteid,note in notes %}
                 <li>
-                    <button class="removebuttons" name="noteid" value="{{noteid}}" form="removenote">{{noteid}}. remove</button>
+                    <h3 style="position: relative;left: 1%;">{{noteid}}.</h3>
                     <a href="editNote/?noteid={{noteid}}"><button class="notebuttons"><textarea readonly class="notes">{{note.notes}}</textarea></button></a>
                 </li>
             {% endfor %}

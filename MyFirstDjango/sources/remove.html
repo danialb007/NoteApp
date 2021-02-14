@@ -3,6 +3,9 @@
 <body>
     <div class="profile">
         <h1>{{user}}'s profile</h1><br>
+        <div class="info">
+            <h2>{{info}}</h2>
+        </div><br>
         <form method="POST" action="" id="removeform">{%csrf_token%}</form>
         <div class="removebar">
             <a style="float: left;" href="/profile"><button>Profile</button></a>
@@ -12,9 +15,11 @@
         <div class="removelist">
             <ul>
                 {% for noteid,note in notes %}
-                <li class="removelistitems">
-                    <input class="removecheck" form="removeform" type="checkbox" name="noterm{{noteid}}" value="{{noteid}}">
-                    <button class="notebuttons"><textarea readonly class="notes">{{note.notes}}</textarea></button>
+                <li>
+                    <label>
+                        <input form="removeform" type="checkbox" name="noterm{{noteid}}" value="{{noteid}}">
+                        <div class="notes">{{note.notes}}</div>
+                    </label>
                 </li>
                 {% endfor %}
                 </form>

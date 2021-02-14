@@ -6,73 +6,70 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <style>
-*,*:focus{
-    outline: none;
-}
 body{
     background-color: #333333;
     color: #e95050;
     font-size: 30px;
 }
+*,*:focus{
+    outline: none;
+}
+a{
+    color: #e95050;
+    text-align: center;
+}
 h1{
-    cursor: default;
+    text-align: center;
+}
+a:hover{
+    color: #e95050;
+    text-decoration: none;
 }
 .mainpage{
     margin: auto;
     width: min-content;
 }
 .profile{
-    margin-top: 1%;
+    position: relative;
+    margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
     width: 98%;
 }
-.removelist{
-    margin-top: 2%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    top: 0;
-    display: flex;
+.removelist li{
+    padding-right: 0.5%;
+    width: 33.3%;
 }
-.removelistitems{
-    width: 27%;
+.removelist input{
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+.removelist input:checked ~ .notes{
+    background-color: #692222;
+}
+.removelist label{
+    width: 100%;
+}
+.removelist .notes{
+    overflow-wrap: break-word;
+    overflow: auto;
+    width: 100%;
+    padding-left: 10px;
+    height: 100px;
+    font-size: 20px;
 }
 .removebar{
     text-align: center;
-    z-index: 999;
-    background-color: #333333;
     top: 0;
     position: sticky;
     position: -webkit-sticky;
     border-bottom: 1px solid #b1e426;
 }
-.removecheck{
-    cursor: pointer;
-    opacity: 0;
-    position: relative;
-    z-index: 998;
-    height: 100px;
-    width: 100px;
-    display: flex;
-    margin-top: -90px;
-    top: 100px;
-    left: 10px;
-}
-.removecheck:checked ~ .notebuttons .notes{
-    background-color: #752828;
-}
-.removecheck:hover ~ .notebuttons .notes{
-    border-bottom: 1px solid #b1e426;
-}
-.removecheck ~ .notebuttons .notes{
-    padding: 5%;
-    overflow: hidden;
-    overflow-wrap: break-word;
-    font-size: 18px;
-}
 textarea{
-    padding: 3%;
+    padding: 2%;
+    padding-left: 2%;
 }
 ul{
     list-style-type: none;
@@ -81,7 +78,32 @@ ul{
 li{
     width: 50%;
     float: left;
-    display: block;
+}
+button{
+    transition: color 0.3s ease-in-out;
+    background-color: #00000000;
+    font-size: 26px;
+    position: relative;
+    color: #e95050;
+    border: none;
+    cursor: pointer;
+    line-height: 45px;
+}
+button:hover,button:focus{
+    outline: none;
+    color: #b1e426;
+}
+input{
+    padding-left: 1%;   
+    transition: border-bottom 0.3s ease-in-out;
+    background-color: #222222;
+    color: #b6b6b6;
+    font-size: 30px;
+    border: 1px solid #00000000;
+    border-radius: 10px;
+}
+input:focus,input:hover{
+    border-bottom: 1px solid #b1e426;
 }
 .notes{
     transition: border-bottom 0.3s ease-in-out,background-color 0.3s ease-in-out;
@@ -100,31 +122,6 @@ li{
 .notebuttons{
     width: 100%;
 }
-button{
-    transition: color 0.3s ease-in-out;
-    background-color: #00000000;
-    font-size: 26px;
-    position: relative;
-    color: #e95050;
-    border: none;
-    cursor: pointer;
-    line-height: 45px;
-}
-button:hover,button:focus{
-    outline: none;
-    color: #b1e426;
-}
-input{
-    transition: border-bottom 0.3s ease-in-out;
-    background-color: #222222;
-    color: #b6b6b6;
-    font-size: 30px;
-    border: 1px solid #00000000;
-    border-radius: 10px;
-}
-input:focus,input:hover{
-    border-bottom: 1px solid #b1e426;
-}
 .editor{
     width: 100%;
     height: 400px;
@@ -134,6 +131,7 @@ input:focus,input:hover{
     resize: none;
     font-family: 'Times New Roman', Times, serif;
     font-size: 24px;
+    border-radius: 10px;
 }
 .info{
     color: #b1e426;
@@ -141,15 +139,7 @@ input:focus,input:hover{
     width: max-content;
 }
 .searchinput{
-    font-size: 20px;
-    width: 20%;
-    height: 30px;
-    position: absolute;
-    left: 110px;
-    margin-top: 15px;
-
-}
-.searchbutton{
+    padding-left: 1%;
     font-size: 20px;
 }
 </style>

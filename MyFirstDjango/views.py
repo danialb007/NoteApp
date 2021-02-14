@@ -44,21 +44,15 @@ def profile(request):
     notes = Notes.objects.filter(user=user)
     search = ''
     info = ''
-    if request.method == 'POST':
-        noteid = request.POST.get('noteid')
-        if noteid:
-            noteid = int(noteid) - 1
-            Notes.objects.filter(user=user)[noteid].delete()
-            notes = Notes.objects.filter(user=user)
     search = request.GET.get('q')    
     if search:
         notes = Search(search,user)
     if not notes:
-        info = 'You have no notes!'
+        info = 'You have no notes'
         if search:
-            info = 'Nothing found!'
+            info = 'Nothing found'
     noteids = [x for x in range(1,len(notes)+1)]
-    notes = list(zip(noteids,notes))
+    notes = reversed(list(zip(noteids,notes)))
     return render(request,'profile.html',{'user':user, 'notes':notes,'info':info})
 
 def remove(request):
@@ -80,14 +74,18 @@ def remove(request):
             if notes_to_remove:
                 [ notes[x].delete() for x in notes_to_remove ]
                 notes = Notes.objects.filter(user=user)
+                info = f"Removed {len(notes_to_remove)} notes"
             else:
+                info = 'Select some notes to remove'
                 del notes_to_remove, noterm, removeall
     if not notes:
-        info = 'You have no notes!'
+        info = 'You have no notes'
+        if removeall:
+            info = 'Removed all the notes'
         return render(request,'remove.html',{'user':user, 'info':info})
     noteids = [x for x in range(1,len(notes)+1)]
-    notes = list(zip(noteids,notes))
-    return render(request,'remove.html',{'user':user, 'notes':notes,})
+    notes = reversed(list(zip(noteids,notes)))
+    return render(request,'remove.html',{'user':user, 'notes':notes, 'info':info})
 
 def createNote(request):
     user = Authenticate(request)
@@ -96,9 +94,9 @@ def createNote(request):
     if request.method == 'POST':
         note = request.POST.get('note')
         if not note:
-            info = 'Empty note!'
+            info = 'Empty note'
             return render(request,'createNote.html',{'info':info, 'user':user})
-        info = 'Created!'
+        info = 'Created'
         Notes.objects.create(user=user,notes=note)
         return render(request,'createNote.html',{'info':info, 'user':user})
     return render(request,'createNote.html',{'info':info, 'user':user})
@@ -115,9 +113,9 @@ def editNote(request):
     if request.method == 'POST':
         new_note = request.POST.get('note')
         if not new_note:
-            info = 'Empty note!'
+            info = 'Empty note'
             return render(request,'editNote.html',{'info':info, 'user':user, 'new_note':new_note})
-        info = 'Edited!'
+        info = 'Edited'
         Notes.objects.filter(user=user,notes=note.notes).update(notes=new_note)
         return render(request,'editNote.html',{'info':info, 'user':user, 'new_note':new_note})
     return render(request,'editNote.html',{'info':info, 'user':user, 'note':note})
