@@ -119,7 +119,7 @@ def editNote(request):
         Notes.objects.filter(user=user,notes=note.notes).update(notes=new_note)
         return render(request,'editNote.html',{'info':info, 'user':user, 'new_note':new_note})
     return render(request,'editNote.html',{'info':info, 'user':user, 'note':note})
-    
+
 def CreateUser(user,passwd,email):
     passwd = sha256(passwd.encode('utf-8')).hexdigest()
     Users.objects.create(user=user,passwd=passwd,email=email)

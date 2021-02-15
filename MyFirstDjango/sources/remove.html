@@ -8,9 +8,9 @@
         </div><br>
         <form method="POST" action="" id="removeform">{%csrf_token%}</form>
         <div class="removebar">
-            <a style="float: left;" href="/profile"><button>Profile</button></a>
+            <a href="/profile"><button>Profile</button></a>
             <button type="submit" form="removeform">Remove</button>
-            <a href="?removeall=removeall" style="float: right;"><button name="removeall" value="removeall" type="button" form="removeform">Remove all</button></a>
+            <a href="?removeall=removeall"><button name="removeall" value="removeall" type="button" form="removeform">Remove all</button></a>
         </div>
         <div class="removelist">
             <ul>

@@ -9,7 +9,7 @@
 body{
     background-color: #333333;
     color: #e95050;
-    font-size: 30px;
+    font-size: 180%;
 }
 *,*:focus{
     outline: none;
@@ -29,16 +29,18 @@ a:hover{
     margin: auto;
     width: min-content;
 }
+.removelist{
+    background-color: teal;
+}
 .profile{
-    position: relative;
     margin-top: 2%;
     margin-left: auto;
     margin-right: auto;
     width: 98%;
 }
 .removelist li{
-    padding-right: 0.5%;
-    width: 33.3%;
+    padding-right: 1%;
+    width: 50%;
 }
 .removelist input{
     opacity: 0;
@@ -53,23 +55,22 @@ a:hover{
     width: 100%;
 }
 .removelist .notes{
-    overflow-wrap: break-word;
     overflow: auto;
+    overflow-wrap: break-word;
     width: 100%;
-    padding-left: 10px;
-    height: 100px;
-    font-size: 20px;
+    padding: 1%;
+    height: 200px;
 }
 .removebar{
-    text-align: center;
-    top: 0;
-    position: sticky;
-    position: -webkit-sticky;
+    display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid #b1e426;
 }
+.removebar button{
+    font-size: 80%;
+}
 textarea{
-    padding: 2%;
-    padding-left: 2%;
+    padding-left: 1%;
 }
 ul{
     list-style-type: none;
@@ -77,13 +78,15 @@ ul{
 }
 li{
     width: 50%;
+    display: flex;
+    flex-direction: column;
     float: left;
+    padding-bottom: 1%;
 }
 button{
     transition: color 0.3s ease-in-out;
     background-color: #00000000;
-    font-size: 26px;
-    position: relative;
+    font-size: 80%;
     color: #e95050;
     border: none;
     cursor: pointer;
@@ -98,7 +101,7 @@ input{
     transition: border-bottom 0.3s ease-in-out;
     background-color: #222222;
     color: #b6b6b6;
-    font-size: 30px;
+    font-size: 90%;
     border: 1px solid #00000000;
     border-radius: 10px;
 }
@@ -106,6 +109,8 @@ input:focus,input:hover{
     border-bottom: 1px solid #b1e426;
 }
 .notes{
+    font-size: 80%;
+    height: 200px;
     transition: border-bottom 0.3s ease-in-out,background-color 0.3s ease-in-out;
     width: 100%;
     background-color: #222222;
@@ -120,7 +125,8 @@ input:focus,input:hover{
     border-bottom: 2px solid #b1e426;
 }
 .notebuttons{
-    width: 100%;
+    display: flex;
+    width: 98%;
 }
 .editor{
     width: 100%;
@@ -130,7 +136,7 @@ input:focus,input:hover{
     border: none;
     resize: none;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 24px;
+    font-size: 90%;
     border-radius: 10px;
 }
 .info{
@@ -140,7 +146,7 @@ input:focus,input:hover{
 }
 .searchinput{
     padding-left: 1%;
-    font-size: 20px;
+    font-size: 65%;
 }
 </style>
 {% block body %}

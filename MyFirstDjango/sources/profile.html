@@ -9,7 +9,6 @@
             <input placeholder="Search..." class="searchinput" name="q" type="text"><br>
             <a href="/remove"><button class="smallbutton" type="button">Remove</button></a>
         </form>
-        <form method="POST" action="" id="removenote">{%csrf_token%}</form>
         <div class="info">
             <h2>{{info}}</h2>
         </div>
@@ -17,8 +16,8 @@
             <ul>
             {% for noteid,note in notes %}
                 <li>
-                    <h3 style="position: relative;left: 1%;">{{noteid}}.</h3>
-                    <a href="editNote/?noteid={{noteid}}"><button class="notebuttons"><textarea readonly class="notes">{{note.notes}}</textarea></button></a>
+                    <h3>{{noteid}}.</h3>
+                    <a class="notebuttons" href="editNote/?noteid={{noteid}}"><textarea readonly class="notes">{{note.notes}}</textarea></a>
                 </li>
             {% endfor %}
                 </form>
