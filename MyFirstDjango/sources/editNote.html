@@ -4,7 +4,7 @@
     <h1 style="padding-right: 10px;display: flex;">Edit the note:<h2 style="color: #b1e426;">{{info}}</h2></h1>
     <form method="POST" action="">
         {%csrf_token%}
-        <textarea autofocus name="note" class="editor">{{note.notes}}{{new_note}}</textarea><br><br>
+        <textarea spellcheck="false" autofocus name="note" class="editor">{{note.notes}}{{new_note}}</textarea><br><br>
         <button type="submit">Save</button>
         <a href="/profile/"><button style="float: right;" type="button">Back to profile</button></a>
     </form>
