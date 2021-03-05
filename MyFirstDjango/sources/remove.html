@@ -12,18 +12,13 @@
             <button type="submit" form="removeform">Remove</button>
             <a href="?removeall=removeall"><button name="removeall" value="removeall" type="button" form="removeform">Remove all</button></a>
         </div>
-        <div class="removelist">
-            <ul>
-                {% for noteid,note in notes %}
-                <li>
-                    <label>
-                        <input form="removeform" type="checkbox" name="noterm{{noteid}}" value="{{noteid}}">
-                        <div class="notes">{{note.notes}}</div>
-                    </label>
-                </li>
-                {% endfor %}
-                </form>
-            </ul>
+        <div class="notes">
+            {% for noteid,note in notes %}
+            <label>
+                <input form="removeform" type="checkbox" name="noterm{{noteid}}" value="{{noteid}}">
+                <div class="note">{{noteid}}<br>{{note.notes}}</div>
+            </label>
+            {% endfor %}
         </div>
     </div>
 </body>

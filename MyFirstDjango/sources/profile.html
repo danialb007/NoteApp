@@ -4,7 +4,7 @@
     <div class="profile">
         <a href="/profile"><h1>{{user}}'s profile</h1></a>
         <form style="margin-top: 2%;text-align: center; border-bottom: 1px solid #b1e426;" method="GET" action="">
-            <a href="createNote/"><button type="button">Create</button></a>
+            <a href="createNote/"><div class="createbtn">+</div></a>
             <a href="/?logout=logout"><button type="button">Log out</button></a><br>
             <input placeholder="Search..." class="searchinput" name="q" type="text"><br>
             <a href="/remove"><button class="smallbutton" type="button">Remove</button></a>
@@ -12,16 +12,12 @@
         <div class="info">
             <h2>{{info}}</h2>
         </div>
-        <div>
-            <ul>
+        <div class="notes">
             {% for noteid,note in notes %}
-                <li>
-                    <h3>{{noteid}}.</h3>
-                    <a class="notebuttons" href="editNote/?noteid={{noteid}}"><textarea readonly class="notes">{{note.notes}}</textarea></a>
-                </li>
+            <a href="editNote/?noteid={{noteid}}">
+                <div class="note">{{noteid}}.<br>{{note.notes}}</div>
+            </a>
             {% endfor %}
-                </form>
-            </ul>
         </div>
     </div>
 </body>

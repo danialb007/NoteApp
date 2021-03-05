@@ -1,5 +1,4 @@
 /* Base */
-
 body{
     background-color: #333333;
     color: #e95050;
@@ -8,14 +7,10 @@ body{
 *,*:focus{
     outline: none;
 }
-a{
-    color: #e95050;
-    text-align: center;
-}
 h1{
     text-align: center;
 }
-a:hover{
+a:hover, a{
     color: #e95050;
     text-decoration: none;
 }
@@ -23,59 +18,41 @@ a:hover{
     margin: auto;
     width: min-content;
 }
-.removelist{
-    background-color: teal;
-}
 .profile{
-    margin-top: 2%;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 2% auto;
     width: 98%;
 }
-.removelist li{
-    padding-right: 1%;
-    width: 50%;
-}
-.removelist input{
-    opacity: 0;
-    position: absolute;
-    width: 0;
-    height: 0;
-}
-.removelist input:checked ~ .notes{
-    background-color: #692222;
-}
-.removelist label{
-    width: 100%;
-}
-.removelist .notes{
-    overflow: auto;
-    overflow-wrap: break-word;
-    width: 100%;
-    padding: 1%;
-    height: 200px;
+.createbtn{
+    border-radius: 50%;
+    background-color: #e95050;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: 50px;
+    color: #d8d8d8;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-family: initial;
+    font-weight: 600;
 }
 .removebar{
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #b1e426;
 }
-.removebar button{
-    font-size: 80%;
+label input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    opacity: 0;
 }
-textarea{
-    padding-left: 1%;
-}
-ul{
-    list-style-type: none;
-    padding: 0;
-}
-li{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    float: left;
-    padding-bottom: 1%;
+label input:checked ~ .note{
+    background-color: #e9505080;
 }
 button{
     transition: color 0.3s ease-in-out;
@@ -102,25 +79,35 @@ input{
 input:focus,input:hover{
     border-bottom: 1px solid #b1e426;
 }
-.notes{
-    font-size: 80%;
-    height: 200px;
-    transition: border-bottom 0.3s ease-in-out,background-color 0.3s ease-in-out;
-    width: 100%;
+.note{
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
     background-color: #222222;
-    color: #b6b6b6;
-    resize: none;
     border: none;
+    resize: none;
     border-radius: 10px;
     border-bottom: 2px solid #b1e42600;
-    cursor: pointer;
+    color: #d8d8d8;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    overflow-wrap: break-word;
+    width: min-content;
+    max-width: 100%;
 }
-.notes:hover{
+.note:hover{
     border-bottom: 2px solid #b1e426;
 }
-.notebuttons{
+.note::first-line{
+    color: #e95050;
+}
+.notes{
     display: flex;
-    width: 98%;
+    flex-wrap: wrap;
+}
+.notes > *{
+    font-size: initial !important;
+    margin: 0.25rem 0.25rem;
+    max-width: 100%;
 }
 .editor{
     width: 100%;
