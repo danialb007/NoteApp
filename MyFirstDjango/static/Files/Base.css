@@ -22,22 +22,32 @@ a:hover, a{
     margin: 2% auto;
     width: 98%;
 }
-.createbtn{
+.btns{
+    transition: all 0.1s ease-in-out;
     border-radius: 50%;
-    background-color: #e95050;
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
+    background-color: #e9505080;
     width: 50px;
     color: #d8d8d8;
     height: 50px;
     width: 50px;
+    padding: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem;
-    font-family: initial;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.75rem;
     font-weight: 600;
+    margin-left: 0.5rem;
+}
+.btns:hover{
+    background-color: #e95050;
+}
+.btns-div{
+    display: flex;
+    flex-direction: row-reverse;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 }
 .removebar{
     display: flex;
@@ -55,7 +65,7 @@ label input:checked ~ .note{
     background-color: #e9505080;
 }
 button{
-    transition: color 0.3s ease-in-out;
+    transition: color 0.1s ease-in-out;
     background-color: #00000000;
     font-size: 80%;
     color: #e95050;
@@ -69,7 +79,7 @@ button:hover,button:focus{
 }
 input{
     padding-left: 1%;   
-    transition: border-bottom 0.3s ease-in-out;
+    transition: border-bottom 0.1s ease-in-out;
     background-color: #222222;
     color: #b6b6b6;
     font-size: 90%;
@@ -80,7 +90,7 @@ input:focus,input:hover{
     border-bottom: 1px solid #b1e426;
 }
 .note{
-    transition: all 0.3s ease-in-out;
+    transition: all 0.1s ease-in-out;
     cursor: pointer;
     background-color: #222222;
     border: none;
@@ -101,17 +111,22 @@ input:focus,input:hover{
     color: #e95050;
 }
 .notes{
+    margin: auto;
+    max-width: 95%;
     display: flex;
     flex-wrap: wrap;
+    gap: 0.5rem;
 }
 .notes > *{
+    margin: auto 0;
     font-size: initial !important;
-    margin: 0.25rem 0.25rem;
     max-width: 100%;
+    height: max-content;
 }
 .editor{
     width: 100%;
     height: 400px;
+    padding: .5rem 1rem;
     background-color: #222222;
     color: #d8d8d8;
     border: none;
