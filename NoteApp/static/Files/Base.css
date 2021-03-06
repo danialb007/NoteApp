@@ -107,7 +107,7 @@ input:focus,input:hover{
     padding: 0.5rem;
     font-size: 1.25rem;
     overflow-wrap: break-word;
-    width: min-content;
+    width: max-content;
     max-width: 100%;
 }
 .note:hover{
